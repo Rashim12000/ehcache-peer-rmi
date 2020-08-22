@@ -2,6 +2,8 @@ package com.f1soft.zuul.fonepay;
 
 
 import com.f1soft.zuul.fonepay.dto.Result;
+import com.f1soft.zuul.fonepay.entities.Customer;
+import com.f1soft.zuul.fonepay.repository.CustomerDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -17,12 +19,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @RestController
-public class FooController {
+public class ServerOneController {
 
     @Autowired
     private CacheManager cacheManager;
 
-    @GetMapping("/cahce/get")
+    @Autowired
+    private CustomerDAO customerDAO;
+
+    @GetMapping("/cache/get")
     public Result findById(HttpServletRequest req, HttpServletResponse res) {
 
         String value = (String) cacheManager.getCache("events").get("test").get();
@@ -38,4 +43,25 @@ public class FooController {
         return new Result(1L, "Esewa");
     }
 
+    @GetMapping("/customer/get")
+    public Result findByCustomerId(HttpServletRequest req, HttpServletResponse res) {
+
+        Customer customer = customerDAO.findByCustomerId(1L);
+        log.info("Customer get: {}", customer);
+        return new Result(1L, customer.toString());
+    }
+
+    @GetMapping("/customer/update")
+    public Result updateCustomer(HttpServletRequest req, HttpServletResponse res) {
+
+        Customer customer = customerDAO.findByCustomerId(1L);
+        log.info("Customer get for update: {}", customer.toString());
+
+        customer.setName("ServerOne");
+
+        customerDAO.updateCustomer(customer);
+
+        log.info("Customer after update: {}", customer.toString());
+        return new Result(1L, customer.toString());
+    }
 }

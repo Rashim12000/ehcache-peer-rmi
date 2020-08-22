@@ -47,6 +47,11 @@
         <appender-ref ref="CONSOLE"/>
     </logger>
 
+    <logger name="org.hibernate.cache" additivity="false" level="DEBUG">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
     <logger name="org.springframework" additivity="false" level="DEBUG">
         <appender-ref ref="ASYNC"/>
         <appender-ref ref="CONSOLE"/>

@@ -37,7 +37,7 @@ spring:
     hibernate:
       #none, validate, save, create, create-drop
       #use create-drop to enable import.sql file import
-      ddl-auto: none
+      ddl-auto: update
       connection.CharSet: utf8
       connection.characterEncoding: utf8
       connection.useUnicode: true
@@ -53,4 +53,4 @@ spring:
       hibernate.order_updates: true
       hibernate.jdbc.batch_versioned_data: true
       org.hibernate.envers.audit_table_suffix: _history
-      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory

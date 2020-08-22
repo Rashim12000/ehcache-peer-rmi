@@ -16,18 +16,71 @@
                      port=40001,
                      socketTimeoutMillis=2000"/>
 
-        <defaultCache
-                name="defaut"
-                maxElementsInMemory="5"
-                eternal="false"
-                timeToIdleSeconds="20"
-                timeToLiveSeconds="20"
-                overflowToDisk="false"
-                diskPersistent="false"
-                memoryStoreEvictionPolicy="LRU"
-        />
+
+    <defaultCache
+            name="defaut"
+            maxElementsInMemory="5"
+            eternal="false"
+            timeToIdleSeconds="20"
+            timeToLiveSeconds="20"
+            overflowToDisk="false"
+            diskPersistent="false"
+            memoryStoreEvictionPolicy="LRU"
+    />
+
+    <cache name="org.hibernate.cache.internal.StandardQueryCache"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off">
+        <persistence strategy="none"/>
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=true,
+            replicatePuts=true,
+            replicateUpdates=true,
+            replicateUpdatesViaCopy=true,
+            replicateRemovals=true"/>
+    </cache>
+
+
+    <cache name="org.hibernate.cache.UpdateTimestampsCache"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off">
+        <persistence strategy="none"/>
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=true,
+            replicatePuts=true,
+            replicateUpdates=true,
+            replicateUpdatesViaCopy=true,
+            replicateRemovals=true"/>
+    </cache>
+
 
     <cache name="events"
+           maxEntriesLocalHeap="1000"
+           eternal="true"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=true,
+            replicatePuts=true,
+            replicateUpdates=true,
+            replicateUpdatesViaCopy=true,
+            replicateRemovals=true"/>
+    </cache>
+
+    <cache name="customer"
            maxEntriesLocalHeap="1000"
            eternal="true"
            overflowToDisk="false"
